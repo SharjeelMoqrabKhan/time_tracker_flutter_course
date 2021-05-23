@@ -8,11 +8,11 @@ class SignInPage extends StatelessWidget {
         title: Text('Time Tracker'),
         elevation: 10.0,
       ),
-      body: buildContainer(),
+      body: _buildContainer(),
     );
   }
 
-  Widget buildContainer() {
+  Widget _buildContainer() {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
