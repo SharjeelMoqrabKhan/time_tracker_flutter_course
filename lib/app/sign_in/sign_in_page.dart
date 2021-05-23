@@ -18,6 +18,7 @@ class SignInPage extends StatelessWidget {
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               child: SizedBox(
