@@ -30,7 +30,14 @@ class SignInPage extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () => print("clicked"),
-              child: Text("Sign in with google"),
+              child: Text(
+                "Sign in with google",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                ),
+              ),
+              color: Colors.white,
             ),
           ],
         ),
