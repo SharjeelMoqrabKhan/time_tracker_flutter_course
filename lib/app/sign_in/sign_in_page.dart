@@ -39,6 +39,11 @@ class SignInPage extends StatelessWidget {
                 ),
               ),
               color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
             ),
           ],
         ),
