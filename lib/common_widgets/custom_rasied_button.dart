@@ -7,7 +7,7 @@ class CustomRaisedButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomRaisedButton(
-      {Key key, this.color, this.borderRadius, this.onPressed, this.child})
+      {Key key, this.color, this.borderRadius: 4.0, this.onPressed, this.child})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
