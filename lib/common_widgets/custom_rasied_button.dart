@@ -21,13 +21,7 @@ class CustomRaisedButton extends StatelessWidget {
       height: height,
       child: RaisedButton(
         onPressed: onPressed,
-        child: Text(
-          "Sign in with google",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-          ),
-        ),
+        child: child,
         color: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
