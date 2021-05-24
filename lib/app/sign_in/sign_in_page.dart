@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/sign_In_button.dart';
+import 'package:time_tracker_flutter_course/common_widgets/custom_rasied_button.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -29,6 +30,14 @@ class SignInPage extends StatelessWidget {
             ),
             SizedBox(
               height: 40.0,
+            ),
+            CustomRaisedButton(
+              child: Image.asset("images/google-logo.png"),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+            SizedBox(
+              height: 10.0,
             ),
             SignInButton(
               text: "Sign In With Google",
