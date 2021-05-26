@@ -5,8 +5,12 @@ import 'package:time_tracker_flutter_course/app/sign_in/social_signIn_button.dar
 
 class SignInPage extends StatelessWidget {
   Future<void> _signInAnonymously() async {
-    final userCredential = await FirebaseAuth.instance.signInAnonymously();
-    print(userCredential.user.uid);
+    try {
+      final userCredential = await FirebaseAuth.instance.signInAnonymously();
+      print(userCredential.user.uid);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
