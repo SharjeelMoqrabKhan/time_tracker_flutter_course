@@ -23,6 +23,8 @@ class _LandingPageState extends State<LandingPage> {
         onSignIn: (user) => _updateUser(user),
       );
     }
-    return HomePage();
+    return HomePage(
+      onSignOut: () => _updateUser(null),
+    );
   }
 }
