@@ -21,7 +21,8 @@ class Auth implements AuthBase {
     final userCredential = await _firebaseAuth.signInAnonymously();
     return userCredential.user;
   }
-   @override
+
+  @override
   Future<User> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final googleUser = await googleSignIn.signIn();
@@ -46,6 +47,8 @@ class Auth implements AuthBase {
 
   @override
   Future<void> signOut() async {
+    final googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
 }
