@@ -6,7 +6,7 @@ class EmailSignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Tracker'),
+        title: Text('Sign In'),
         elevation: 10.0,
       ),
       body: Card(
