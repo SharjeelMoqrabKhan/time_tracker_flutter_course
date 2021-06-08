@@ -57,59 +57,61 @@ class SignInPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Sign In',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
-            SocialSignInButton(
-              text: "Sign In With Google",
-              textColor: Colors.black,
-              assetName: 'images/google-logo.png',
-              color: Colors.white,
-              onPressed: _signInWithGoogle,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            SocialSignInButton(
-              text: "Sign In With Facebook",
-              textColor: Colors.white,
-              assetName: 'images/facebook-logo.png',
-              color: Color(0xFF334D92),
-              onPressed: _signInWithFacebook,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            SignInButton(
-              text: "Sign In With Email",
-              textColor: Colors.white,
-              color: Colors.teal[700],
-              onPressed: () => _signInWithEmail(context),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "OR",
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            SignInButton(
-              text: "Go Anonymous",
-              textColor: Colors.white,
-              color: Colors.lime[700],
-              onPressed: _signInAnonymously,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sign In',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 40.0,
+              ),
+              SocialSignInButton(
+                text: "Sign In With Google",
+                textColor: Colors.black,
+                assetName: 'images/google-logo.png',
+                color: Colors.white,
+                onPressed: _signInWithGoogle,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              SocialSignInButton(
+                text: "Sign In With Facebook",
+                textColor: Colors.white,
+                assetName: 'images/facebook-logo.png',
+                color: Color(0xFF334D92),
+                onPressed: _signInWithFacebook,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              SignInButton(
+                text: "Sign In With Email",
+                textColor: Colors.white,
+                color: Colors.teal[700],
+                onPressed: () => _signInWithEmail(context),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "OR",
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SignInButton(
+                text: "Go Anonymous",
+                textColor: Colors.white,
+                color: Colors.lime[700],
+                onPressed: _signInAnonymously,
+              ),
+            ],
+          ),
         ),
       ),
     );
