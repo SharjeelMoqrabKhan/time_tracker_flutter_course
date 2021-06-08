@@ -1,6 +1,5 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
+import 'package:time_tracker_flutter_course/app/sign_in/email_sign_in_page.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/sign_In_button.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/social_signIn_button.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
@@ -33,8 +32,13 @@ class SignInPage extends StatelessWidget {
     }
   }
 
-  void _signInWithEmail(BuildContext context){
-    //TODO: Show email and password
+  void _signInWithEmail(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (context) => EmailSignInPage(),
+      ),
+    );
   }
 
   @override
@@ -89,7 +93,7 @@ class SignInPage extends StatelessWidget {
               text: "Sign In With Email",
               textColor: Colors.white,
               color: Colors.teal[700],
-              onPressed: ()=>_signInWithEmail(context),
+              onPressed: () => _signInWithEmail(context),
             ),
             SizedBox(
               height: 10.0,
