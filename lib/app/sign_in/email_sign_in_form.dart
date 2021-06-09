@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker_flutter_course/common_widgets/custom_sign_in_button.dart';
 
-class EmailSignInForm extends StatelessWidget {
+class EmailSignInForm extends StatefulWidget {
+  @override
+  _EmailSignInFormState createState() => _EmailSignInFormState();
+}
+
+class _EmailSignInFormState extends State<EmailSignInForm> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   void _onSubmit() {
