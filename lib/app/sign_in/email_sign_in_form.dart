@@ -18,6 +18,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   Future<void> _onSubmit() async {
     try {
@@ -44,6 +46,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     _passwordController.clear();
   }
 
+  void _emailEditingCompleted() {
+    FocusScope.of(context).requestFocus(_passwordFocusNode);
+  }
+
   List<Widget> _buildChildren() {
     final primaryText = _formType == EmailSignInFormType.signIn
         ? "Sign In"
@@ -52,11 +58,11 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ? "Need an account? Register"
         : "Have an account? Sign In";
     return [
-      _buildTextField(),
+      _buildEmailField(),
       SizedBox(
         height: 10,
       ),
-      _buildPasswordField(passwordController: _passwordController),
+      _buildPasswordFeild(),
       SizedBox(
         height: 10,
       ),
@@ -74,8 +80,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     ];
   }
 
-  TextField _buildTextField() {
+  TextField _buildEmailField() {
     return TextField(
+      focusNode: _emailFocusNode,
+      onEditingComplete: _emailEditingCompleted,
       decoration:
           InputDecoration(labelText: "Email", hintText: "test@gmail.com"),
       controller: _emailController,
@@ -83,6 +91,17 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       autocorrect: false,
       textInputAction: TextInputAction.next,
     );
+  }
+
+  TextField _buildPasswordFeild() {
+    return TextField(
+        focusNode: _passwordFocusNode,
+        onEditingComplete: _onSubmit,
+        decoration: InputDecoration(labelText: "Password"),
+        obscureText: true,
+        controller: _passwordController,
+        autocorrect: false,
+        textInputAction: TextInputAction.done);
   }
 
   @override
@@ -96,28 +115,6 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           children: _buildChildren(),
         ),
       ),
-    );
-  }
-}
-
-// ignore: camel_case_types
-class _buildPasswordField extends StatelessWidget {
-  const _buildPasswordField({
-    Key key,
-    @required TextEditingController passwordController,
-  }) : _passwordController = passwordController, super(key: key);
-
-  final TextEditingController _passwordController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: "Password",
-      ),
-      controller: _passwordController,
-      obscureText: true,
-      textInputAction: TextInputAction.done,
     );
   }
 }
