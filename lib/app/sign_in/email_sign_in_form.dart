@@ -52,21 +52,11 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ? "Need an account? Register"
         : "Have an account? Sign In";
     return [
-      TextField(
-        decoration:
-            InputDecoration(labelText: "Email", hintText: "test@gmail.com"),
-        controller: _emailController,
-      ),
+      _buildTextField(),
       SizedBox(
         height: 10,
       ),
-      TextField(
-        decoration: InputDecoration(
-          hintText: "Password",
-        ),
-        controller: _passwordController,
-        obscureText: true,
-      ),
+      _buildPasswordField(passwordController: _passwordController),
       SizedBox(
         height: 10,
       ),
@@ -84,6 +74,17 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     ];
   }
 
+  TextField _buildTextField() {
+    return TextField(
+      decoration:
+          InputDecoration(labelText: "Email", hintText: "test@gmail.com"),
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      autocorrect: false,
+      textInputAction: TextInputAction.next,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -95,6 +96,28 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           children: _buildChildren(),
         ),
       ),
+    );
+  }
+}
+
+// ignore: camel_case_types
+class _buildPasswordField extends StatelessWidget {
+  const _buildPasswordField({
+    Key key,
+    @required TextEditingController passwordController,
+  }) : _passwordController = passwordController, super(key: key);
+
+  final TextEditingController _passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: "Password",
+      ),
+      controller: _passwordController,
+      obscureText: true,
+      textInputAction: TextInputAction.done,
     );
   }
 }
