@@ -83,12 +83,15 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _buildEmailField() {
+    bool emailValid = widget.emailValidator.isValid(_email);
     return TextField(
       focusNode: _emailFocusNode,
       onEditingComplete: _emailEditingCompleted,
       onChanged: (email) => _updateState(),
-      decoration:
-          InputDecoration(labelText: "Email", hintText: "test@gmail.com"),
+      decoration: InputDecoration(
+          labelText: "Email",
+          hintText: "test@gmail.com",
+          errorText: emailValid ? null : widget.emailError),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       autocorrect: false,
@@ -97,11 +100,12 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _buildPasswordFeild() {
+    bool passwordValid = widget.emailValidator.isValid(_email);
     return TextField(
         focusNode: _passwordFocusNode,
         onChanged: (password) => _updateState(),
         onEditingComplete: _onSubmit,
-        decoration: InputDecoration(labelText: "Password"),
+        decoration: InputDecoration(labelText: "Password",errorText: passwordValid ? null : widget.passwordError),
         obscureText: true,
         controller: _passwordController,
         autocorrect: false,
