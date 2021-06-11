@@ -20,8 +20,12 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+  bool _submitted = false;
 
   Future<void> _onSubmit() async {
+    setState(() {
+      _submitted = true;
+    });
     try {
       if (_formType == EmailSignInFormType.signIn) {
         await widget.auth
@@ -83,7 +87,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _buildEmailField() {
-    bool emailValid = widget.emailValidator.isValid(_email);
+    bool showTextError = _submitted && !widget.emailValidator.isValid(_email);
     return TextField(
       focusNode: _emailFocusNode,
       onEditingComplete: _emailEditingCompleted,
@@ -91,7 +95,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
           labelText: "Email",
           hintText: "test@gmail.com",
-          errorText: emailValid ? null : widget.emailError),
+          errorText: showTextError ? widget.emailError : null),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       autocorrect: false,
@@ -100,12 +104,14 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _buildPasswordFeild() {
-    bool passwordValid = widget.emailValidator.isValid(_email);
+    bool _showTextError = _submitted && !widget.emailValidator.isValid(_email);
     return TextField(
         focusNode: _passwordFocusNode,
         onChanged: (password) => _updateState(),
         onEditingComplete: _onSubmit,
-        decoration: InputDecoration(labelText: "Password",errorText: passwordValid ? null : widget.passwordError),
+        decoration: InputDecoration(
+            labelText: "Password",
+            errorText: _showTextError ? widget.passwordError : null),
         obscureText: true,
         controller: _passwordController,
         autocorrect: false,
