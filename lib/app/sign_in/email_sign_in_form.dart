@@ -105,7 +105,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _buildPasswordFeild() {
-    bool _showTextError = _submitted && !widget.emailValidator.isValid(_email);
+    bool _showTextError =
+        _submitted && !widget.emailValidator.isValid(_password);
     return TextField(
         focusNode: _passwordFocusNode,
         onChanged: (password) => _updateState(),
