@@ -21,13 +21,13 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   bool _submitted = false;
-
+  bool _isLoading = false;
   Future<void> _onSubmit() async {
     setState(() {
       _submitted = true;
+      _isLoading = true;
     });
     try {
-      await Future.delayed(Duration(seconds: 3));
       if (_formType == EmailSignInFormType.signIn) {
         await widget.auth
             .signInWithEmailPassword(_email.trim(), _password.trim());
@@ -38,6 +38,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       Navigator.of(context).pop();
     } catch (e) {
       print(e.toString());
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -64,7 +68,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ? "Need an account? Register"
         : "Have an account? Sign In";
     bool signInEnable = widget.emailValidator.isValid(_email) &&
-        widget.passwordValidator.isValid(_password);
+        widget.passwordValidator.isValid(_password) &&
+        !_isLoading;
     return [
       _buildEmailField(),
       SizedBox(
@@ -82,7 +87,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         height: 10,
       ),
       FlatButton(
-        onPressed: _toggle,
+        onPressed: !_isLoading ? _toggle : null,
         child: Text(secondryText),
       )
     ];
@@ -97,6 +102,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
           labelText: "Email",
           hintText: "test@gmail.com",
+          enabled: _isLoading == false,
           errorText: showTextError ? widget.emailError : null),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -113,8 +119,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         onChanged: (password) => _updateState(),
         onEditingComplete: _onSubmit,
         decoration: InputDecoration(
-            labelText: "Password",
-            errorText: _showTextError ? widget.passwordError : null),
+          labelText: "Password",
+          errorText: _showTextError ? widget.passwordError : null,
+          enabled: _isLoading == false,
+        ),
         obscureText: true,
         controller: _passwordController,
         autocorrect: false,
