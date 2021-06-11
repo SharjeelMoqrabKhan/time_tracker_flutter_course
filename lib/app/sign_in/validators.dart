@@ -5,6 +5,11 @@ abstract class StringValidator {
 class NonEmptyStringValidator implements StringValidator {
   @override
   bool isValid(String value) {
-    return value.isEmpty;
+    return value.isNotEmpty;
   }
+}
+
+class EmailAndPasswordValidator {
+  final StringValidator emailValidator = NonEmptyStringValidator();
+  final StringValidator passwordValidator = NonEmptyStringValidator();
 }
