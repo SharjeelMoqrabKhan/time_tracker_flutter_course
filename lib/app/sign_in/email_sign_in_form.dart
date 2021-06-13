@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:time_tracker_flutter_course/app/sign_in/validators.dart';
 import 'package:time_tracker_flutter_course/common_widgets/custom_sign_in_button.dart';
@@ -37,24 +39,27 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       }
       Navigator.of(context).pop();
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(
-            "Sign In Falied",
-            style: TextStyle(fontSize: 16.0),
-          ),
-          content: Text(e.toString()),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
+      if (Platform.isIOS) {
+        print("Platform is iOS");
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text(
+                    "Sign In Falied",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  content: Text(e.toString()),
+                  actions: [
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("OK"),
+                    ),
+                  ],
+                ));
+      }
     } finally {
       setState(() {
         _isLoading = false;
