@@ -18,10 +18,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.indigo),
         title: 'Time Tracker',
-        home: LandingPage(
-          auth:
-              Auth(), // authbase is an abstract class jsut to provide infterface so we can't use it directly so we use auth class
-        ),
+        home: LandingPage(),
       ),
     );
   }
