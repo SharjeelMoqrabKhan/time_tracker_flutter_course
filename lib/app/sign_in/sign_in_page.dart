@@ -7,7 +7,13 @@ import 'package:time_tracker_flutter_course/app/sign_in/social_signIn_button.dar
 import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool _isLoading = false;
   void _showSignInErrors(BuildContext context, Exception exception) {
     if (exception is FirebaseException &&
         exception.code == 'ERROR_ABORTED BY USER') {
@@ -18,29 +24,50 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<void> _signInAnonymously(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signInAnonymously();
     } catch (e) {
       _showSignInErrors(context, e);
+    }finally{
+      setState(() {
+        _isLoading = true;
+      });
     }
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signInWithGoogle();
     } catch (e) {
       _showSignInErrors(context, e);
+    }finally{
+      setState(() {
+        _isLoading = true;
+      });
     }
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signInWithFacebook();
     } catch (e) {
       _showSignInErrors(context, e);
+    }finally{
+      setState(() {
+        _isLoading = true;
+      });
     }
   }
 
