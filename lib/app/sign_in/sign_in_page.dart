@@ -32,9 +32,9 @@ class _SignInPageState extends State<SignInPage> {
       await auth.signInAnonymously();
     } catch (e) {
       _showSignInErrors(context, e);
-    }finally{
+    } finally {
       setState(() {
-        _isLoading = true;
+        _isLoading = false;
       });
     }
   }
@@ -48,9 +48,9 @@ class _SignInPageState extends State<SignInPage> {
       await auth.signInWithGoogle();
     } catch (e) {
       _showSignInErrors(context, e);
-    }finally{
+    } finally {
       setState(() {
-        _isLoading = true;
+        _isLoading = false;
       });
     }
   }
@@ -64,9 +64,9 @@ class _SignInPageState extends State<SignInPage> {
       await auth.signInWithFacebook();
     } catch (e) {
       _showSignInErrors(context, e);
-    }finally{
+    } finally {
       setState(() {
-        _isLoading = true;
+        _isLoading = false;
       });
     }
   }
@@ -101,10 +101,9 @@ class _SignInPageState extends State<SignInPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Sign In',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+              SizedBox(
+                height: 50.0,
+                child: _buildHeader(),
               ),
               SizedBox(
                 height: 40.0,
@@ -114,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                 textColor: Colors.black,
                 assetName: 'images/google-logo.png',
                 color: Colors.white,
-                onPressed: () => _signInWithGoogle(context),
+                onPressed: _isLoading ? null : () => _signInWithGoogle(context),
               ),
               SizedBox(
                 height: 10.0,
@@ -124,7 +123,7 @@ class _SignInPageState extends State<SignInPage> {
                 textColor: Colors.white,
                 assetName: 'images/facebook-logo.png',
                 color: Color(0xFF334D92),
-                onPressed: () => _signInWithFacebook(context),
+                onPressed: _isLoading ? null : () => _signInWithFacebook(context),
               ),
               SizedBox(
                 height: 10.0,
@@ -133,7 +132,7 @@ class _SignInPageState extends State<SignInPage> {
                 text: "Sign In With Email",
                 textColor: Colors.white,
                 color: Colors.teal[700],
-                onPressed: () => _signInWithEmail(context),
+                onPressed:_isLoading ? null :  () => _signInWithEmail(context),
               ),
               SizedBox(
                 height: 10.0,
@@ -147,12 +146,25 @@ class _SignInPageState extends State<SignInPage> {
                 text: "Go Anonymous",
                 textColor: Colors.white,
                 color: Colors.lime[700],
-                onPressed: () => _signInAnonymously(context),
+                onPressed:_isLoading ? null :  () => _signInAnonymously(context),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader() {
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Text(
+      'Sign In',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
     );
   }
 }
