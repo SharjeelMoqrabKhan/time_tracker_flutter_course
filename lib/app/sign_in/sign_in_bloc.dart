@@ -21,13 +21,14 @@ class SignInBloc {
       _setLoading(true);
       return await signInMethod();
     } catch (e) {
-      rethrow;
-    } finally {
       _setLoading(false);
+      rethrow;
     }
   }
 
-  Future<User> signInWithGoogle()async=> await _signIn(auth.signInWithGoogle);
-  Future<User> signInWithFacebook() async=> await _signIn(auth.signInWithFacebook);
-  Future<User> signInAnonymously() async=> await _signIn(auth.signInAnonymously);
+  Future<User> signInWithGoogle() async => await _signIn(auth.signInWithGoogle);
+  Future<User> signInWithFacebook() async =>
+      await _signIn(auth.signInWithFacebook);
+  Future<User> signInAnonymously() async =>
+      await _signIn(auth.signInAnonymously);
 }
