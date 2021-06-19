@@ -89,17 +89,24 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<SignInBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Time Tracker'),
         elevation: 10.0,
       ),
-      body: _buildContainer(context),
+      body: StreamBuilder<bool>(
+        stream: bloc.isLoadingStream,
+        initialData: false,
+        builder: (context, snapshot) {
+          return _buildContainer(context,snapshot.data);
+        }
+      ),
       backgroundColor: Colors.grey[200],
     );
   }
 
-  Widget _buildContainer(BuildContext context) {
+  Widget _buildContainer(BuildContext context,bool isLoading) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
