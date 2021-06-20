@@ -17,7 +17,7 @@ class EmailSignInBloc {
     _modelController.close();
   }
 
-  Future<void> _onSubmit() async {
+  Future<void> submit() async {
     updateWith(submitted: true, isLoading: true);
     try {
       if (_model.formType == EmailSignInFormType.signIn) {
@@ -34,12 +34,13 @@ class EmailSignInBloc {
   }
 
   // adding values in stream
-  void updateWith(
-      {String email,
-      String password,
-      EmailSignInFormType formType,
-      bool isLoading,
-      bool submitted}) {
+  void updateWith({
+    String email,
+    String password,
+    EmailSignInFormType formType,
+    bool isLoading,
+    bool submitted,
+  }) {
     //update model
     _model = _model.copywith(
       email: email,
