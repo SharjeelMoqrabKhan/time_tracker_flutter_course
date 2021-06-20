@@ -53,17 +53,8 @@ class _EmailSignInFormBlocBassedState extends State<EmailSignInFormBlocBassed> {
     }
   }
 
-  void _toggle(EmailSignInModel model) {
-    widget.bloc.updateWith(
-      email: '',
-      password: '',
-      submitted: false,
-      formType: model.formType == EmailSignInFormType.signIn
-          ? EmailSignInFormType.register
-          : EmailSignInFormType.signIn,
-      isLoading: false,
-      
-    );
+  void _toggle() {
+    widget.bloc.toogleFormType();
     _emailController.clear();
     _passwordController.clear();
   }
@@ -102,7 +93,7 @@ class _EmailSignInFormBlocBassedState extends State<EmailSignInFormBlocBassed> {
         height: 10,
       ),
       FlatButton(
-        onPressed: !model.isLoading ?()=> _toggle(model) : null,
+        onPressed: !model.isLoading ? _toggle : null,
         child: Text(secondryText),
       )
     ];
@@ -113,7 +104,7 @@ class _EmailSignInFormBlocBassedState extends State<EmailSignInFormBlocBassed> {
     return TextField(
       focusNode: _emailFocusNode,
       onEditingComplete:()=> _emailEditingCompleted(model),
-      onChanged: (email) => widget.bloc.updateWith(email:email),
+      onChanged: widget.bloc.updateEmail,
       decoration: InputDecoration(
           labelText: "Email",
           hintText: "test@gmail.com",
@@ -131,7 +122,7 @@ class _EmailSignInFormBlocBassedState extends State<EmailSignInFormBlocBassed> {
         model.submitted && !widget.emailValidator.isValid(model.password);
     return TextField(
         focusNode: _passwordFocusNode,
-        onChanged: (password) =>widget.bloc.updateWith(password:password),
+        onChanged: widget.bloc.updatePassword,
         onEditingComplete: _submit,
         decoration: InputDecoration(
           labelText: "Password",
