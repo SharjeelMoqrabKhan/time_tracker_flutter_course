@@ -9,8 +9,9 @@ import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_ex
 import 'package:time_tracker_flutter_course/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key key, @required this.bloc}) : super(key: key);
+  const SignInPage({Key key, @required this.bloc, @required this.isLoading}) : super(key: key);
   final SignInBloc bloc;
+  final bool isLoading;
   static Widget create(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<ValueNotifier<bool>>(
@@ -19,7 +20,7 @@ class SignInPage extends StatelessWidget {
         builder: (_, isLoading, __) => Provider<SignInBloc>(
           create: (_) => SignInBloc(auth: auth, isLoading: isLoading),
           child: Consumer<SignInBloc>(
-            builder: (_, bloc, __) => SignInPage(bloc: bloc),
+            builder: (_, bloc, __) => SignInPage(bloc: bloc,isLoading: isLoading.value,),
           ),
         ),
       ),
@@ -70,18 +71,17 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = Provider.of<ValueNotifier<bool>>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Time Tracker'),
         elevation: 10.0,
       ),
-      body: _buildContainer(context, isLoading.value),
+      body: _buildContainer(context),
       backgroundColor: Colors.grey[200],
     );
   }
 
-  Widget _buildContainer(BuildContext context, bool isLoading) {
+  Widget _buildContainer(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -92,7 +92,7 @@ class SignInPage extends StatelessWidget {
             children: [
               SizedBox(
                 height: 50.0,
-                child: _buildHeader(isLoading),
+                child: _buildHeader(),
               ),
               SizedBox(
                 height: 40.0,
@@ -145,7 +145,7 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(bool isLoading) {
+  Widget _buildHeader() {
     if (isLoading) {
       return Center(
         child: CircularProgressIndicator(),
