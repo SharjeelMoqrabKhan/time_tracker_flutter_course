@@ -32,7 +32,7 @@ class FireStoreDatabase implements Database {
                 )
               : null;
         },
-      ),
+      ).toList(),
     );
   }
 
