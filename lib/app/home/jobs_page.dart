@@ -31,7 +31,7 @@ class JobsPage extends StatelessWidget {
   Future<void> _createJob(BuildContext context) async {
     try {
       final database = Provider.of<Database>(context, listen: false);
-      await database.createJob(Job(name: 'Flutter', ratePerhour: 12));
+      await database.createJob(Job(name: 'Flutter', ratePerHour: 12));
     } on FirebaseException catch (e) {
       showExceptionAlertBox(context, title: 'Operation Failed', exception: e);
     }

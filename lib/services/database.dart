@@ -22,17 +22,11 @@ class FireStoreDatabase implements Database {
     final refernce = FirebaseFirestore.instance.collection(path);
     final snapshot = refernce.snapshots();
     return snapshot.map(
-      (snapshot) => snapshot.docs.map(
-        (snapshot) {
-          final data = snapshot.data();
-          return data != null
-              ? Job(
-                  name: data['name'],
-                  ratePerhour: data['ratePerHour'],
-                )
-              : null;
-        },
-      ).toList(),
+      (snapshot) => snapshot.docs
+          .map(
+            (snapshot) => Job.fromMap(snapshot.data()),
+          )
+          .toList(),
     );
   }
 

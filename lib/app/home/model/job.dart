@@ -1,9 +1,18 @@
 class Job {
-  Job({this.name, this.ratePerhour});
+  Job({this.name, this.ratePerHour});
   final String name;
-  final int ratePerhour;
+  final int ratePerHour;
+
+  factory Job.fromMap(Map<String,dynamic>data){
+    if(data==null){
+      return null;
+    }
+    final String name = data['name'];
+    final int ratePerHour = data['ratePerHour'];
+    return Job(name: name,ratePerHour: ratePerHour);
+  }
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'ratePerHour': ratePerhour};
+    return {'name': name, 'ratePerHour': ratePerHour};
   }
 }
