@@ -21,6 +21,22 @@ class _AddJobState extends State<AddJob> {
       appBar: AppBar(
         title: Text("New Job"),
       ),
+      backgroundColor: Colors.grey.shade300,
+      body: buildBuildContent(),
     );
   }
+
+  buildBuildContent() => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Placeholder(
+                fallbackHeight: 200,
+              ),
+            ),
+          ),
+        ),
+      );
 }

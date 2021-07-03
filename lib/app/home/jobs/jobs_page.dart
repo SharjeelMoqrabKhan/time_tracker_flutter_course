@@ -1,10 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course/app/home/jobs/add_jobs.dart';
 import 'package:time_tracker_flutter_course/app/home/model/job.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dart';
-import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
@@ -26,15 +24,6 @@ class JobsPage extends StatelessWidget {
         cancleActionText: "Cancle");
     if (didSignOutRequest == true) {
       _signOut(context);
-    }
-  }
-
-  Future<void> _createJob(BuildContext context) async {
-    try {
-      final database = Provider.of<Database>(context, listen: false);
-      await database.createJob(Job(name: 'Flutter', ratePerHour: 12));
-    } on FirebaseException catch (e) {
-      showExceptionAlertBox(context, title: 'Operation Failed', exception: e);
     }
   }
 
