@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course/app/home/jobs/add_jobs.dart';
 import 'package:time_tracker_flutter_course/app/home/model/job.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
@@ -57,7 +58,7 @@ class JobsPage extends StatelessWidget {
       ),
       body: _buildContext(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _createJob(context),
+        onPressed: () => AddJob.show(context),
         child: Icon(Icons.add),
       ),
     );

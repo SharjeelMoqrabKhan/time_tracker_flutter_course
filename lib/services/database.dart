@@ -12,7 +12,7 @@ abstract class Database {
 class FireStoreDatabase implements Database {
   FireStoreDatabase({@required this.uid}) : assert(uid != null);
   final String uid;
-  final _service = FireStoreService.instance  ;
+  final _service = FireStoreService.instance;
   Future<void> createJob(Job job) => _service.setData(
         path: APIPath.job(uid, 'job_abc'),
         data: job.toMap(),
