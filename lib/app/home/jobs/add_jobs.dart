@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course/app/home/model/job.dart';
+import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
 class AddJob extends StatefulWidget {
@@ -36,10 +38,18 @@ class _AddJobState extends State<AddJob> {
   }
 
   Future<void> _submit() async {
-    if (_validateAndSaveForm()) {
-      final job = Job(name: _jobName, ratePerHour: _ratePerHour);
-      await widget.database.createJob(job);
-      Navigator.of(context).pop();
+    try {
+      if (_validateAndSaveForm()) {
+        final job = Job(name: _jobName, ratePerHour: _ratePerHour);
+        await widget.database.createJob(job);
+        Navigator.of(context).pop();
+      }
+    } on FirebaseException catch (e) {
+      showExceptionAlertBox(
+        context,
+        title: "Operation Failed",
+        exception: e,
+      );
     }
   }
 
