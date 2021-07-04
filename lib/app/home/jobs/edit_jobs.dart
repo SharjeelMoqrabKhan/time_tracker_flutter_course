@@ -6,15 +6,18 @@ import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dar
 import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
-class AddJob extends StatefulWidget {
-  const AddJob({Key key, @required this.database}) : super(key: key);
+class EditJobPage extends StatefulWidget {
+  const EditJobPage({Key key, this.job, @required this.database})
+      : super(key: key);
+  final Job job;
   final Database database;
-  static Future<void> show(BuildContext context) async {
+  static Future<void> show(BuildContext context, {Job job}) async {
     final database = Provider.of<Database>(context, listen: false);
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AddJob(
+        builder: (context) => EditJobPage(
           database: database,
+          job: job,
         ),
         fullscreenDialog: true,
       ),
@@ -22,10 +25,10 @@ class AddJob extends StatefulWidget {
   }
 
   @override
-  _AddJobState createState() => _AddJobState();
+  _EditJobPageState createState() => _EditJobPageState();
 }
 
-class _AddJobState extends State<AddJob> {
+class _EditJobPageState extends State<EditJobPage> {
   final _formKey = GlobalKey<FormState>();
   String _jobName;
   int _ratePerHour;
@@ -36,6 +39,15 @@ class _AddJobState extends State<AddJob> {
       return true;
     }
     return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.job != null) {
+      _jobName = widget.job.name;
+      _ratePerHour = widget.job.ratePerHour;
+    }
   }
 
   Future<void> _submit() async {
@@ -70,7 +82,7 @@ class _AddJobState extends State<AddJob> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New Job"),
+        title: Text(widget.job == null ? "New Job" : "Edit Job"),
         actions: [
           FlatButton(
             onPressed: _submit,
@@ -109,11 +121,13 @@ class _AddJobState extends State<AddJob> {
     return [
       TextFormField(
         decoration: InputDecoration(hintText: "Job Name"),
+        initialValue: _jobName,
         validator: (value) => value.isNotEmpty ? null : 'Can\'t be empty ',
         onSaved: (value) => _jobName = value,
       ),
       TextFormField(
         decoration: InputDecoration(hintText: "Rate Per Hour"),
+        initialValue: _ratePerHour != null ? '$_ratePerHour' : null,
         keyboardType: TextInputType.numberWithOptions(
           decimal: false,
           signed: false,
