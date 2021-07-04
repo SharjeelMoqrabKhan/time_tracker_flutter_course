@@ -31,12 +31,31 @@ class _AddJobState extends State<AddJob> {
           padding: const EdgeInsets.all(8.0),
           child: Card(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Placeholder(
-                fallbackHeight: 200,
-              ),
-            ),
+                padding: const EdgeInsets.all(8.0), child: _buildForm()),
           ),
         ),
       );
+  Widget _buildForm() {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: _buildFormChildern(),
+      ),
+    );
+  }
+
+  List<Widget> _buildFormChildern() {
+    return [
+      TextFormField(
+        decoration: InputDecoration(hintText: "Job Name"),
+      ),
+      TextFormField(
+        decoration: InputDecoration(hintText: "Rate Per Hour"),
+        keyboardType: TextInputType.numberWithOptions(
+          decimal: false,
+          signed: false,
+        ),
+      )
+    ];
+  }
 }
