@@ -15,11 +15,39 @@ class AddJob extends StatefulWidget {
 }
 
 class _AddJobState extends State<AddJob> {
+  final _formKey = GlobalKey<FormState>();
+  String _jobName;
+  int _ratePerHour;
+  bool _validateAndSaveForm() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void _submit() {
+    if (_validateAndSaveForm()) {
+      print("Saved form name: $_jobName ratePerHour: $_ratePerHour ");
+    }
+    //TODO: SUBMIT DATA TO FIRESTORE
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("New Job"),
+        actions: [
+          FlatButton(
+            onPressed: _submit,
+            child: Text(
+              "Save",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          )
+        ],
       ),
       backgroundColor: Colors.grey.shade300,
       body: buildBuildContent(),
@@ -37,6 +65,7 @@ class _AddJobState extends State<AddJob> {
       );
   Widget _buildForm() {
     return Form(
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: _buildFormChildern(),
@@ -48,6 +77,8 @@ class _AddJobState extends State<AddJob> {
     return [
       TextFormField(
         decoration: InputDecoration(hintText: "Job Name"),
+        validator: (value) => value.isNotEmpty ? null : 'Can\'t be empty ',
+        onSaved: (value) => _jobName = value,
       ),
       TextFormField(
         decoration: InputDecoration(hintText: "Rate Per Hour"),
@@ -55,7 +86,8 @@ class _AddJobState extends State<AddJob> {
           decimal: false,
           signed: false,
         ),
-      )
+        onSaved: (value) => _ratePerHour = int.tryParse(value) ?? 0,
+      ),
     ];
   }
 }
