@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course/app/home/model/job.dart';
+import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
@@ -38,18 +39,30 @@ class _AddJobState extends State<AddJob> {
   }
 
   Future<void> _submit() async {
-    try {
-      if (_validateAndSaveForm()) {
-        final job = Job(name: _jobName, ratePerHour: _ratePerHour);
-        await widget.database.createJob(job);
-        Navigator.of(context).pop();
+    if (_validateAndSaveForm()) {
+      try {
+        final job = await widget.database.streamJobs().first;
+        final allNames = job.map((e) => e.name).toList();
+
+        if (allNames.contains(_jobName)) {
+          showAlertDialog(
+            context,
+            title: "Name is already used",
+            content: "Please choose any other name",
+            defaultActionButton: 'Ok',
+          );
+        } else {
+          final job = Job(name: _jobName, ratePerHour: _ratePerHour);
+          await widget.database.createJob(job);
+          Navigator.of(context).pop();
+        }
+      } on FirebaseException catch (e) {
+        showExceptionAlertBox(
+          context,
+          title: "Operation Failed",
+          exception: e,
+        );
       }
-    } on FirebaseException catch (e) {
-      showExceptionAlertBox(
-        context,
-        title: "Operation Failed",
-        exception: e,
-      );
     }
   }
 
