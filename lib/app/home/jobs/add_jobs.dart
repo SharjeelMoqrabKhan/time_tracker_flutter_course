@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course/app/home/model/job.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
 
 class AddJob extends StatefulWidget {
   const AddJob({Key key, @required this.database}) : super(key: key);
-  final database;
+  final Database database;
   static Future<void> show(BuildContext context) async {
     final database = Provider.of<Database>(context, listen: false);
     await Navigator.of(context).push(
@@ -34,11 +35,12 @@ class _AddJobState extends State<AddJob> {
     return false;
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_validateAndSaveForm()) {
-      print("Saved form name: $_jobName ratePerHour: $_ratePerHour ");
+      final job = Job(name: _jobName, ratePerHour: _ratePerHour);
+      await widget.database.createJob(job);
+      Navigator.of(context).pop();
     }
-    final database = Provider.of<Database>(context, listen: false);
   }
 
   @override
