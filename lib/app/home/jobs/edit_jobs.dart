@@ -55,7 +55,9 @@ class _EditJobPageState extends State<EditJobPage> {
       try {
         final job = await widget.database.streamJobs().first;
         final allNames = job.map((e) => e.name).toList();
-
+        if(widget.job != null){
+          allNames.remove(widget.job.name);
+        }
         if (allNames.contains(_jobName)) {
           showAlertDialog(
             context,
@@ -64,8 +66,9 @@ class _EditJobPageState extends State<EditJobPage> {
             defaultActionButton: 'Ok',
           );
         } else {
-          final job = Job(name: _jobName, ratePerHour: _ratePerHour);
-          await widget.database.createJob(job);
+          final id=widget.job?.id??documentIdFormCurrentDate();
+          final job = Job(id:id,name: _jobName, ratePerHour: _ratePerHour);
+          await widget.database.setJob(job);
           Navigator.of(context).pop();
         }
       } on FirebaseException catch (e) {
