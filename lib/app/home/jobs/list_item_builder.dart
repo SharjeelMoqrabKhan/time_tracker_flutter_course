@@ -4,7 +4,7 @@ import 'package:time_tracker_flutter_course/app/home/jobs/empty_content.dart';
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ListItemBuilder<T> extends StatelessWidget {
-  const ListItemBuilder({Key key, this.snapshot, this.itemBuilder})
+  const ListItemBuilder({Key key,@required this.snapshot, @required this.itemBuilder})
       : super(key: key);
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder<T> itemBuilder;
@@ -13,7 +13,7 @@ class ListItemBuilder<T> extends StatelessWidget {
     if (snapshot.hasData) {
       final List<T> items = snapshot.data;
       if (items.isNotEmpty) {
-        _buildList(items);
+        return _buildList(items);
       } else {
         return EmptyContent();
       }
@@ -27,7 +27,14 @@ class ListItemBuilder<T> extends StatelessWidget {
       child: CircularProgressIndicator(),
     );
   }
-  Widget _buildList(List<T> items){
 
+  Widget _buildList(List<T> items) {
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) => itemBuilder(
+        context,
+        items[index],
+      ),
+    );
   }
 }
