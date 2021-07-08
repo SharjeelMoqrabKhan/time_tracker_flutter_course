@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course/app/home/model/job.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_alert_dialog.dart';
 import 'package:time_tracker_flutter_course/common_widgets/show_firebase_atuh_exception.dart';
@@ -11,8 +10,8 @@ class EditJobPage extends StatefulWidget {
       : super(key: key);
   final Job job;
   final Database database;
-  static Future<void> show(BuildContext context, {Job job}) async {
-    final database = Provider.of<Database>(context, listen: false);
+  static Future<void> show(BuildContext context,
+      {Database database, Job job}) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditJobPage(
@@ -55,7 +54,7 @@ class _EditJobPageState extends State<EditJobPage> {
       try {
         final job = await widget.database.jobsStream().first;
         final allNames = job.map((e) => e.name).toList();
-        if(widget.job != null){
+        if (widget.job != null) {
           allNames.remove(widget.job.name);
         }
         if (allNames.contains(_jobName)) {
@@ -66,8 +65,8 @@ class _EditJobPageState extends State<EditJobPage> {
             defaultActionButton: 'Ok',
           );
         } else {
-          final id=widget.job?.id??documentIdFromCurrentDate(); 
-          final job = Job(id:id,name: _jobName, ratePerHour: _ratePerHour);
+          final id = widget.job?.id ?? documentIdFromCurrentDate();
+          final job = Job(id: id, name: _jobName, ratePerHour: _ratePerHour);
           await widget.database.setJob(job);
           Navigator.of(context).pop();
         }
