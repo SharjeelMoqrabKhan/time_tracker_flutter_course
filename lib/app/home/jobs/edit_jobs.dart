@@ -53,7 +53,7 @@ class _EditJobPageState extends State<EditJobPage> {
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
       try {
-        final job = await widget.database.streamJobs().first;
+        final job = await widget.database.jobsStream().first;
         final allNames = job.map((e) => e.name).toList();
         if(widget.job != null){
           allNames.remove(widget.job.name);
@@ -66,7 +66,7 @@ class _EditJobPageState extends State<EditJobPage> {
             defaultActionButton: 'Ok',
           );
         } else {
-          final id=widget.job?.id??documentIdFormCurrentDate();
+          final id=widget.job?.id??documentIdFromCurrentDate(); 
           final job = Job(id:id,name: _jobName, ratePerHour: _ratePerHour);
           await widget.database.setJob(job);
           Navigator.of(context).pop();

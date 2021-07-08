@@ -69,7 +69,7 @@ class JobsPage extends StatelessWidget {
   Widget _buildContext(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
     return StreamBuilder<List<Job>>(
-      stream: database.streamJobs(),
+      stream: database.jobsStream(),
       builder: (context, snapshot) {
         return ListItemBuilder<Job>(
           snapshot: snapshot,
