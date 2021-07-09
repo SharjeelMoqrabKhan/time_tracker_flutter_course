@@ -52,8 +52,8 @@ class _EditJobPageState extends State<EditJobPage> {
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
       try {
-        final job = await widget.database.jobsStream().first;
-        final allNames = job.map((e) => e.name).toList();
+        final jobs = await widget.database.jobsStream().first;
+        final allNames = jobs.map((job) => job.name).toList();
         if (widget.job != null) {
           allNames.remove(widget.job.name);
         }

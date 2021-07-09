@@ -9,7 +9,6 @@ abstract class Database {
   Future<void> deleteJob(Job job);
   Stream<List<Job>> jobsStream();
   Stream<Job> jobStream({@required String jobId});
-
   Future<void> setEntry(Entry entry);
   Future<void> deleteEntry(Entry entry);
   Stream<List<Entry>> entriesStream({Job job});
