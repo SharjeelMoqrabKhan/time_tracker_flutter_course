@@ -19,6 +19,12 @@ class _HomePageState extends State<HomePage> {
     };
   }
 
+  Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+    TabItem.jobs: GlobalKey<NavigatorState>(),
+    TabItem.entries: GlobalKey<NavigatorState>(),
+    TabItem.account: GlobalKey<NavigatorState>(),
+  };
+
   void _select(TabItem tabItem) {
     setState(() {
       _currentTab = tabItem;
@@ -27,10 +33,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoHomeScaffold(
-      currentTab: _currentTab,
-      onSelectedTab: _select,
-      widgetBuilder: widgetBuilder,
+    return WillPopScope(
+      onWillPop: () async =>
+          !await navigatorKeys[_currentTab].currentState.maybePop(),
+      child: CupertinoHomeScaffold(
+        navigatorKeys: navigatorKeys,
+        currentTab: _currentTab,
+        onSelectedTab: _select,
+        widgetBuilder: widgetBuilder,
+      ),
     );
   }
 }
