@@ -46,8 +46,16 @@ class JobsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Jobs'),
-        centerTitle: true,
         actions: [
+          IconButton(
+            icon: Icon(Icons.add, color: Colors.white),
+            onPressed: () {
+              EditJobPage.show(
+                context,
+                database: Provider.of<Database>(context, listen: false),
+              );
+            },
+          ),
           FlatButton(
             onPressed: () {
               _confirmSingOut(context);
@@ -60,13 +68,6 @@ class JobsPage extends StatelessWidget {
         ],
       ),
       body: _buildContext(context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(
-          context,
-          database: Provider.of<Database>(context, listen: false),
-        ),
-        child: Icon(Icons.add),
-      ),
     );
   }
 
