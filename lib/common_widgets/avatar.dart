@@ -8,16 +8,25 @@ class Avatar extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Colors.black12,
-      radius: radius,
-      backgroundImage: photoUrl != null ? NetworkImage(photoUrl) : null,
-      child: photoUrl == null
-          ? Icon(
-              Icons.camera_alt,
-              size: radius,
-            )
-          : null,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.black,
+          width: 3.0
+        )
+      ),
+      child: CircleAvatar(
+        backgroundColor: Colors.black12,
+        radius: radius,
+        backgroundImage: photoUrl != null ? NetworkImage(photoUrl) : null,
+        child: photoUrl == null
+            ? Icon(
+                Icons.camera_alt,
+                size: radius,
+              )
+            : null,
+      ),
     );
   }
 }
